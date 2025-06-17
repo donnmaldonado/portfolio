@@ -347,4 +347,23 @@ footer {
     .project-grid {
         grid-template-columns: 1fr;
     }
+}
+
+.attribution {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.8rem;
+    color: #e0e0e0;
+    margin-top: 2rem;
+    background-color: #121212;
+}
+
+.attribution a {
+    color: #64b5f6;
+    text-decoration: none;
+}
+
+.attribution a:hover {
+    color: #90caf9;
+    text-decoration: underline;
 } 

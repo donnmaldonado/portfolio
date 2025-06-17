@@ -79,7 +79,7 @@
                         <img src="magic-sheets.png" alt="Magic Sheets Project">
                     </div>
                     <h3>Magic Sheets</h3>
-                    <p>MagicSheets is a generative AI-powered web app that enables educators, parents, and students to create customizable K–12 worksheets in seconds. Users can select a subject, grade, topic, and worksheet type (e.g., multiple choice, short answer) and refine output using smart regeneration prompts like “simplify” or “make it more descriptive.” Built with Django and powered by OpenAI’s GPT-4o, the platform also supports in-browser DOCX editing, curriculum-aligned organization, answer key toggling, and a community-driven ecosystem for sharing and remixing worksheets.
+                    <p>MagicSheets is a generative AI-powered web app that enables educators, parents, and students to create customizable K–12 worksheets in seconds. Users can select a subject, grade, topic, and worksheet type (e.g., multiple choice, short answer) and refine output using smart regeneration prompts like "simplify" or "make it more descriptive." Built with Django and powered by OpenAI's GPT-4o, the platform also supports in-browser DOCX editing, curriculum-aligned organization, answer key toggling, and a community-driven ecosystem for sharing and remixing worksheets.
 
                         The app is fully open source and available on GitHub, with setup instructions and deployment-ready code.</p>
                     <div class="project-links">
@@ -128,6 +128,7 @@
                 <div class="social-links">
                     <a href="https://github.com/donnmaldonado" target="_blank"><i class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/donnoban-maldonado/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" id="email-copy"><i class="fas fa-envelope"></i><span class="tooltip">Click to copy email</span></a>
                 </div>
                 <p>mdonnoban@gmail.com</p>
             </div>
@@ -149,6 +150,24 @@
                 navLinks.classList.remove('active');
                 hamburger.classList.remove('active');
             });
+        });
+
+        // Email copy functionality
+        const emailCopy = document.getElementById('email-copy');
+        const tooltip = emailCopy.querySelector('.tooltip');
+        
+        emailCopy.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = 'mdonnoban@gmail.com';
+            try {
+                await navigator.clipboard.writeText(email);
+                tooltip.textContent = 'Email copied!';
+                setTimeout(() => {
+                    tooltip.textContent = 'Click to copy email';
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy email:', err);
+            }
         });
     </script>
 </body>

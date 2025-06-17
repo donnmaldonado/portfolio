@@ -235,11 +235,35 @@ nav {
     color: #333;
     font-size: 1.5rem;
     margin: 0 1rem;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
 }
 
 .social-links a:hover {
     color: #007bff;
+    transform: translateY(-2px);
+}
+
+.tooltip {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.social-links a:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Footer */

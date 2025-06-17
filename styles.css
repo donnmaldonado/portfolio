@@ -78,6 +78,22 @@ nav {
     padding: 2rem;
 }
 
+.profile-image {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 2rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .hero h1 {
     font-size: 3rem;
     margin-bottom: 1rem;

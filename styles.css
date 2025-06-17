@@ -151,19 +151,68 @@ nav {
 
 .project-card {
     background: white;
-    padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    overflow: hidden;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
 }
 
+.project-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.05);
+}
+
 .project-card h3 {
-    margin-bottom: 1rem;
+    margin: 1.5rem 1.5rem 0.5rem;
     color: #007bff;
+}
+
+.project-card p {
+    margin: 0 1.5rem 1.5rem;
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.project-links {
+    padding: 0 1.5rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.project-links a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.3s ease;
+    padding: 0.5rem 0;
+}
+
+.project-links a i {
+    margin-right: 0.5rem;
+}
+
+.project-links a:hover {
+    color: #0056b3;
 }
 
 /* Contact Section */

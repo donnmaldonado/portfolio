@@ -691,8 +691,8 @@ nav {
 .contact-actions {
     display: flex;
     align-items: center;
-    gap: 1rem;
     flex-wrap: wrap;
+    gap: 1.25rem 2.25rem;
     margin-bottom: 1.75rem;
 }
 
@@ -718,7 +718,7 @@ nav {
 .email-copy.copied { border-color: var(--accent); }
 .email-copy.copied i { color: var(--accent); }
 
-.social-links { display: flex; gap: 2rem; }
+.social-links { display: flex; flex-wrap: wrap; gap: 1.75rem; }
 .social-links a {
     display: inline-flex;
     align-items: center;

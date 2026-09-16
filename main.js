@@ -170,11 +170,24 @@
     navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
-    /* ---------- Header rule on scroll ---------- */
+    /* ---------- Header rule + brand on scroll ---------- */
     const header = document.getElementById('site-header');
-    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 10);
+    const firstSection = document.getElementById('experience');
+
+    /* The name only belongs in the header once the hero — which already shows it
+       — has scrolled away and the work sections take over. */
+    const brandShown = () => {
+        if (!firstSection) return window.scrollY > 10;
+        return window.scrollY >= firstSection.offsetTop - header.offsetHeight;
+    };
+
+    const onScroll = () => {
+        header.classList.toggle('scrolled', window.scrollY > 10);
+        header.classList.toggle('brand-visible', brandShown());
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
 
     /* ---------- Active nav link ---------- */
     const sections = [...document.querySelectorAll('main section[id]')];

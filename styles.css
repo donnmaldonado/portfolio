@@ -200,11 +200,22 @@ nav {
     gap: 1rem;
 }
 
+/* The hero already says the name, so the brand stays out of the way until
+   the work sections scroll up under the header. */
 .brand {
     font-size: 1.4rem;
     font-weight: 500;
     color: var(--ink);
     letter-spacing: -0.02em;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-12px);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s;
+}
+#site-header.brand-visible .brand {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
 }
 .brand:hover { color: var(--ink); }
 

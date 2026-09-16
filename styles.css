@@ -209,6 +209,12 @@ nav {
 .brand:hover { color: var(--ink); }
 
 .nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-links .nav-social { margin-left: -1.1rem; }
+.nav-links .nav-social.first {
+    margin-left: 0;
+    padding-left: 1.75rem;
+    border-left: 1px solid var(--rule);
+}
 
 .nav-links a {
     position: relative;
@@ -232,6 +238,19 @@ nav {
 }
 .nav-links a:hover::after,
 .nav-links a.active::after { opacity: 1; }
+
+.nav-social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.05rem;
+    color: var(--ink-muted);
+    transition: color 0.15s var(--ease);
+}
+.nav-social a:hover { color: var(--accent); }
+.nav-social a i { width: 1.15rem; text-align: center; }
+.nav-social a::after { display: none; }
+.nav-social-label { display: none; }
 
 .nav-links .nav-cta {
     padding: 0.55rem 1.5rem;
@@ -469,7 +488,6 @@ nav {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
-    align-items: start;
 }
 
 .skill-card {
@@ -560,6 +578,7 @@ nav {
 .project-links {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 1.5rem;
     margin-top: auto;
 }
@@ -571,6 +590,13 @@ nav {
     font-weight: 500;
     color: var(--accent);
 }
+.project-links .icon-link {
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--ink-faint);
+    transition: color 0.15s var(--ease), transform 0.15s var(--ease);
+}
+.project-links .icon-link:hover { color: var(--ink); transform: translateY(-2px); }
 .project-links a .arw { transition: transform 0.15s var(--ease); }
 .project-links a:hover { color: var(--accent-deep); }
 .project-links a:hover .arw { transform: translateX(4px); }
@@ -727,6 +753,10 @@ nav {
     .nav-links a::after { display: none; }
     .nav-links li:last-child a { border-bottom: 0; }
     .nav-links .nav-cta { margin-top: 1rem; text-align: center; justify-content: center; }
+    .nav-links .nav-social,
+    .nav-links .nav-social.first { margin-left: 0; padding-left: 0; border-left: 0; }
+    .nav-social a { font-size: 1.05rem; }
+    .nav-social-label { display: inline; }
 
     .shell { padding: 0 1.5rem; }
     .hero { padding: calc(var(--nav-h) + 3rem) 0 3.5rem; }

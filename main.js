@@ -207,7 +207,7 @@
 
     /* ---------- Copy email ---------- */
     const copyBtn = document.getElementById('email-copy');
-    const copyLabel = document.getElementById('copy-label');
+    const copyIcon = document.getElementById('copy-icon');
     const copyStatus = document.getElementById('copy-status');
     let resetTimer;
 
@@ -230,12 +230,15 @@
             document.body.removeChild(field);
         }
 
-        copyLabel.textContent = copied ? 'Copied' : 'Press ⌘C to copy';
-        copyStatus.textContent = copied ? `${email} copied to clipboard` : email;
+        /* The address itself stays put; the icon carries the feedback. */
+        copyIcon.className = copied ? 'fas fa-check' : 'fas fa-copy';
+        copyBtn.classList.toggle('copied', copied);
+        copyStatus.textContent = copied ? `${email} copied to clipboard` : `Press ⌘C to copy ${email}`;
 
         clearTimeout(resetTimer);
         resetTimer = setTimeout(() => {
-            copyLabel.textContent = 'Copy address';
+            copyIcon.className = 'fas fa-copy';
+            copyBtn.classList.remove('copied');
             copyStatus.textContent = '';
         }, 2500);
     });

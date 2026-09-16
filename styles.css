@@ -662,18 +662,19 @@ nav {
 
 /* ---------- Contact ---------- */
 
-.contact .section-head h2 { max-width: 14ch; }
-.contact-pitch { font-size: 1.1rem; font-weight: 300; line-height: 1.75; margin-bottom: 2.5rem; }
+.contact { padding: 4.5rem 0; }
+.contact .section-head h2 { max-width: 14ch; font-size: clamp(1.8rem, 3vw, 2.5rem); }
+.contact-pitch { font-size: 1rem; font-weight: 300; line-height: 1.7; margin-bottom: 1.75rem; }
 
-.contact-facts { margin-bottom: 3rem; }
+.contact-facts { margin-bottom: 2rem; }
 .contact-facts li {
     display: grid;
     grid-template-columns: 1.25rem 12rem 1fr;
     gap: 0 1rem;
     align-items: baseline;
-    padding: 1.1rem 0;
+    padding: 0.85rem 0;
     border-top: 1px solid var(--rule);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
 }
 .contact-facts li::before { content: '—'; color: var(--accent); }
 .contact-facts li:nth-child(2)::before { color: var(--accent-2); }
@@ -692,8 +693,30 @@ nav {
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.75rem;
 }
+
+/* The address is the button — the icon is the only affordance it needs. */
+.email-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.7rem 1.2rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: 6px;
+    background: transparent;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.email-copy:hover { border-color: var(--ink); }
+.email-copy i { font-size: 0.85em; color: var(--ink-faint); transition: color 0.2s var(--ease); }
+.email-copy:hover i { color: var(--accent); }
+.email-copy.copied { border-color: var(--accent); }
+.email-copy.copied i { color: var(--accent); }
 
 .social-links { display: flex; gap: 2rem; }
 .social-links a {
@@ -706,7 +729,7 @@ nav {
 }
 .social-links a:hover { color: var(--accent); }
 
-.live-region { min-height: 1.5rem; margin-top: 1rem; font-size: 0.9rem; color: var(--accent); }
+.live-region { min-height: 1.4rem; margin-top: 0.9rem; font-size: 0.88rem; color: var(--accent); }
 
 /* ---------- Footer ---------- */
 

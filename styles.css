@@ -279,7 +279,6 @@ nav {
     letter-spacing: -0.035em;
     margin: 1.75rem 0 2rem;
 }
-.hero h1 .warm { color: var(--accent); }
 
 .hero-pitch {
     font-size: clamp(1.1rem, 1.6vw, 1.3rem);
@@ -469,13 +468,14 @@ nav {
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1rem;
+    align-items: start;
 }
 
 .skill-card {
     background: var(--paper-raised);
     border: 1px solid var(--rule);
-    padding: 2rem;
+    padding: 1.35rem 1.5rem 1.45rem;
     transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 .skill-card:hover {
@@ -484,13 +484,20 @@ nav {
 }
 .skill-card:nth-child(3n+2):hover { border-color: rgba(236, 72, 153, 0.5); }
 .skill-card:nth-child(3n):hover  { border-color: rgba(245, 158, 11, 0.5); }
-.skill-card .eyebrow { margin-bottom: 1.5rem; }
+.skill-card .eyebrow { margin-bottom: 0.85rem; }
 .skill-card ul {
     display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    font-size: 0.95rem;
+    flex-wrap: wrap;
+    gap: 0.35rem 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
     color: var(--ink-muted);
+}
+.skill-card li { white-space: nowrap; }
+.skill-card li:not(:last-child)::after {
+    content: '\00b7';
+    margin: 0 0.6em;
+    color: var(--rule-strong);
 }
 
 /* ---------- Projects ---------- */

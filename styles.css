@@ -308,50 +308,6 @@ nav {
     animation: settle 0.9s var(--ease) 0.2s both;
 }
 
-/* ---------- Marquee band ---------- */
-
-.band {
-    position: relative;
-    z-index: 1;
-    padding: 1.6rem 0;
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-}
-.band p {
-    text-align: center;
-    font-size: 0.74rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    line-height: 2;
-}
-
-/* ---------- Stats ---------- */
-
-.stats {
-    position: relative;
-    z-index: 1;
-    padding: 5rem 0;
-}
-.stats ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
-}
-.stats li { border-top: 1px solid var(--rule); padding-top: 1.5rem; }
-.stats strong {
-    display: block;
-    font-family: var(--font-display);
-    font-size: clamp(2.8rem, 5vw, 4rem);
-    font-weight: 200;
-    line-height: 1;
-    letter-spacing: -0.04em;
-    color: var(--accent);
-    margin-bottom: 0.75rem;
-}
-.stats span { font-size: 0.95rem; color: var(--ink-muted); }
-
 /* ---------- Section shell ---------- */
 
 .section {
@@ -369,17 +325,6 @@ nav {
     margin-top: 1.25rem;
 }
 .section-body { grid-column: 6 / span 7; }
-
-/* Split heading — title left, lede set to the baseline on the right */
-.split-head { margin-bottom: 4rem; }
-.split-head-title { grid-column: 1 / span 5; }
-.split-head-title h2 {
-    font-size: clamp(2rem, 4vw, 3.4rem);
-    line-height: 1.12;
-    margin-top: 1.25rem;
-}
-.split-head-lede { grid-column: 7 / span 6; display: flex; align-items: flex-end; }
-.split-head-lede p { font-size: 1.15rem; font-weight: 300; line-height: 1.7; }
 
 .section-head-wide { margin-bottom: 4rem; }
 .section-head-wide h2 {
@@ -409,8 +354,6 @@ nav {
 
 /* ---------- About ---------- */
 
-.about .section-body p { font-size: 1.1rem; font-weight: 300; line-height: 1.75; }
-.about .section-body p + p { margin-top: 1.75rem; }
 
 /* ---------- Experience — numbered rows ---------- */
 
@@ -733,7 +676,6 @@ nav {
     .hero-figure { max-width: 340px; }
 
     .section-head .sticky { position: static; }
-    .split-head-lede { display: block; }
 
     .role { gap: 1rem; }
     .role-num { font-size: 2.25rem; }
@@ -774,8 +716,6 @@ nav {
     .shell { padding: 0 1.5rem; }
     .hero { padding: calc(var(--nav-h) + 3rem) 0 3.5rem; }
     .section { padding: 4.5rem 0; }
-    .stats { padding: 3.5rem 0; }
-    .stats ul { grid-template-columns: 1fr; gap: 2rem; }
     .brand { font-size: 1.2rem; }
 
     .skills-grid, .project-grid { grid-template-columns: 1fr; }

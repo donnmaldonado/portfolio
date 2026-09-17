@@ -1,7 +1,7 @@
-# donnoban.dev
+# donnoban.com
 
 Personal portfolio site — static HTML, CSS, and vanilla JS, deployed with GitHub Pages
-to [donnoban.dev](https://donnoban.dev).
+to [donnoban.com](https://donnoban.com).
 
 ## Structure
 

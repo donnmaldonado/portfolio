@@ -24,6 +24,12 @@
     --wide:  1400px;
     --nav-h: 80px;
 
+    /* Side gutter. max() with the safe-area inset keeps content clear of the
+       notch and the rounded corners when an iPhone is held sideways. */
+    --gutter:  2rem;
+    --pad-left:  max(var(--gutter), env(safe-area-inset-left));
+    --pad-right: max(var(--gutter), env(safe-area-inset-right));
+
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -33,6 +39,8 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: calc(var(--nav-h) + 24px);
     -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -98,7 +106,8 @@ ul, ol { list-style: none; }
     width: 100%;
     max-width: var(--maxw);
     margin: 0 auto;
-    padding: 0 2rem;
+    padding-left: var(--pad-left);
+    padding-right: var(--pad-right);
 }
 .shell.wide { max-width: var(--wide); }
 
@@ -193,7 +202,8 @@ nav {
     max-width: var(--wide);
     height: 100%;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding-left: var(--pad-left);
+    padding-right: var(--pad-right);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -233,6 +243,7 @@ nav {
     font-size: 0.95rem;
     font-weight: 500;
     color: var(--ink);
+    white-space: nowrap;
 }
 .nav-links a::after {
     content: '';
@@ -294,6 +305,21 @@ nav {
     position: relative;
     z-index: 1;
     padding: calc(var(--nav-h) + 5rem) 0 5rem;
+    /* The hero fills the first screen on its own, so the dark band only
+       arrives on scroll. lvh is the screen with the browser's toolbars
+       retracted — the tallest it gets — so the band never peeks in when a
+       phone hides its address bar. vh first for browsers without it. */
+    min-height: 100vh;
+    min-height: 100lvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* The name is held to one line, so its size is a width budget rather than a
+       taste call: the two names set about 9.1x the font size, and each band
+       below divides the width its column actually gets by ~9.6 for margin.
+       Here that column is the hero's 7 of 12; the cap is where it stops
+       growing because the shell has hit its max width. */
+    --name-size: min(4.8rem, calc(5.3vw - 3px));
 }
 .hero .grid12 { align-items: center; gap: 4rem 5rem; }
 
@@ -304,10 +330,13 @@ nav {
 .hero-copy > *:nth-child(4) { animation-delay: 0.3s; }
 
 .hero h1 {
-    font-size: clamp(2.6rem, 6.2vw, 5rem);
+    font-size: var(--name-size);
     line-height: 1.1;
     letter-spacing: -0.035em;
     margin: 1.75rem 0 2rem;
+    /* Both names on one line at every width — --name-size is sized off the
+       viewport so the line fits rather than wrapping or breaking mid-name. */
+    white-space: nowrap;
 }
 
 .hero-pitch {
@@ -326,10 +355,22 @@ nav {
     flex-wrap: wrap;
 }
 
-.hero-figure { grid-column: 9 / span 4; }
+/* The portrait stands exactly as tall as the copy beside it. Taking the image
+   out of flow is what makes that possible: the row's height then comes from the
+   copy alone, the figure stretches to it, and the image fills the figure —
+   in flow the image's own height would feed back into the row it's sizing to. */
+.hero-figure {
+    grid-column: 9 / span 4;
+    width: 86%;
+    margin-left: auto;
+    align-self: stretch;
+    position: relative;
+}
 .hero-figure img {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    aspect-ratio: 4 / 5;
+    height: 100%;
     object-fit: cover;
     filter: grayscale(0.15);
     border: 1px solid var(--rule);
@@ -499,7 +540,7 @@ nav {
     gap: 2rem;
     align-items: start;
 }
-.after-rows .eyebrow { grid-column: 1 / span 2; }
+.after-rows > .eyebrow { grid-column: 1 / span 2; }
 
 .edu-id { grid-column: 3 / span 4; }
 .edu-id h3 {
@@ -802,9 +843,30 @@ nav {
 @media (max-width: 1040px) {
     .grid12, .role, .after-rows { grid-template-columns: 1fr; }
     .grid12 > *, .role > *, .after-rows > * { grid-column: auto; }
+    /* Same specificity as the 12-column placement above, so it has to be named
+       outright — otherwise it spans an implicit second column and the page
+       lays out wider than the phone. */
+    .after-rows > .eyebrow { grid-column: auto; }
 
     .hero .grid12 { gap: 2.5rem; }
-    .hero-figure { max-width: 340px; }
+    /* Stacked, the name gets the full shell, which this size never fills. */
+    .hero { --name-size: clamp(2.6rem, 6.2vw, 5rem); }
+    /* Stacked, there is no copy alongside to match, so the portrait returns to
+       normal flow and sizes itself off its own ratio. */
+    .hero-figure {
+        width: 340px;
+        max-width: 100%;
+        margin-left: 0;
+        align-self: start;
+        position: static;
+    }
+    .hero-figure img {
+        position: static;
+        /* Without this the height="500" attribute wins and aspect-ratio never
+           gets to size the box. */
+        height: auto;
+        aspect-ratio: 4 / 5;
+    }
 
     .section-head .sticky { position: static; }
 
@@ -817,8 +879,18 @@ nav {
     .site-footer .grid12 { grid-template-columns: repeat(2, 1fr); gap: 2rem 3rem; }
 }
 
-@media (max-width: 820px) {
-    .hamburger { display: block; z-index: 110; }
+/* The full nav bar wants about 870px. Below that it collapses to the menu —
+   which is why this sits above the layout breakpoint rather than on it. */
+@media (max-width: 1100px) and (min-width: 901px) {
+    .nav-links { gap: 1.5rem; }
+    .nav-links .nav-social { margin-left: -0.8rem; }
+    .nav-links .nav-social.first { padding-left: 1.25rem; }
+}
+
+@media (max-width: 900px) {
+    .brand { font-size: 1.2rem; }
+
+    .hamburger { display: block; z-index: 110; margin-right: -4px; }
     .hamburger.active span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
     .hamburger.active span:nth-child(2) { opacity: 0; }
     .hamburger.active span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
@@ -831,9 +903,14 @@ nav {
         flex-direction: column;
         align-items: stretch;
         gap: 0;
-        padding: 0.5rem 2rem 1.75rem;
+        padding: 0.5rem var(--pad-right) 1.75rem var(--pad-left);
         background: var(--paper);
         border-bottom: 1px solid var(--rule);
+        /* Tall menu on a short phone: let the panel scroll rather than run off-screen. */
+        max-height: calc(100vh - var(--nav-h));
+        max-height: calc(100dvh - var(--nav-h));
+        overflow-y: auto;
+        overscroll-behavior: contain;
         transform: translateY(-140%);
         transition: transform 0.35s var(--ease);
     }
@@ -844,13 +921,33 @@ nav {
     .nav-links .nav-cta { margin-top: 1rem; text-align: center; justify-content: center; }
     .nav-links .nav-social,
     .nav-links .nav-social.first { margin-left: 0; padding-left: 0; border-left: 0; }
-    .nav-social a { font-size: 1.05rem; }
+    /* Inline-flex would stop the rule at the end of the word — these are rows now. */
+    .nav-social a { display: flex; font-size: 1.05rem; }
     .nav-social-label { display: inline; }
+}
 
-    .shell { padding: 0 1.5rem; }
-    .hero { padding: calc(var(--nav-h) + 3rem) 0 3.5rem; }
+@media (max-width: 820px) {
+    :root { --gutter: 1.5rem; }
+
+    /* Padding grows the hit area to a thumb's worth; the negative margin keeps
+       the icon sitting exactly where it looks like it should. */
+    .project-meta .icon-link { margin: -0.7rem; padding: 0.7rem; }
+    .social-links a, .footer-col a { padding: 0.45rem 0; }
+    .footer-col ul { gap: 0.15rem; }
+    .hero {
+        padding: calc(var(--nav-h) + 3rem) 0 3.5rem;
+        /* Gutters off, divided by the ratio: the name fills the line at any
+           phone width without ever running past it. */
+        --name-size: min(3rem, calc((100vw - 4rem) / 9.6));
+    }
     .section { padding: 4.5rem 0; }
-    .brand { font-size: 1.2rem; }
+
+    /* The 4:5 portrait stands taller than the phone and eats the whole first
+       screen, so it sits out below this width and the copy takes the row. */
+    .hero-figure { display: none; }
+    .hero-copy { grid-column: 1 / -1; }
+
+    .hero h1 { line-height: 1.05; }
 
     .skills-grid, .project-grid { grid-template-columns: 1fr; }
     .contact-facts li { grid-template-columns: 1.25rem 1fr; }
@@ -859,12 +956,31 @@ nav {
 
 @media (max-width: 480px) {
     body { font-size: 16px; }
-    .hero-figure { max-width: none; }
-    .hero-actions { flex-direction: column; align-items: stretch; gap: 1.25rem; }
-    .hero-actions .btn { width: 100%; }
-    .contact-actions .btn { width: 100%; }
-    .social-links { flex-direction: column; gap: 1rem; }
-    .site-footer .grid12 { grid-template-columns: 1fr; }
+
+    .hero .grid12 { gap: 1.25rem; }
+    .hero h1 { margin: 1.1rem 0 1.2rem; }
+    .hero-pitch { font-size: 1rem; margin-bottom: 1.5rem; }
+    .hero-actions { gap: 1.25rem; }
+
+    .section-head-wide { margin-bottom: 2.5rem; }
+    .section-head-wide h2 { max-width: none; }
+    .resume-btn { width: 100%; }
+
+    .role { padding: 2.25rem 0; }
+    .after-rows { margin-top: 2.5rem; padding-top: 2.25rem; }
+    .edu-honors { gap: 1rem 2.5rem; }
+
+    .skill-card { padding: 1.2rem 1.25rem 1.3rem; }
+    .project-image { height: 170px; }
+    .project-body { padding: 1.5rem; }
+    .project-body h3 { font-size: 1.4rem; }
+
+    .contact { padding: 3.5rem 0; }
+    .contact-actions { gap: 1.5rem; }
+    .email-copy { width: 100%; justify-content: space-between; }
+    .social-links { gap: 1.75rem; }
+
+    .site-footer .grid12 { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 /* ---------- Motion / print ---------- */

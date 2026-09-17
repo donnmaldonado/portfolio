@@ -30,6 +30,14 @@
     --pad-left:  max(var(--gutter), env(safe-area-inset-left));
     --pad-right: max(var(--gutter), env(safe-area-inset-right));
 
+    /* The name is held to one line, so its size is a width budget rather than a
+       taste call: the two names set about 9.1x the font size, and each band
+       below divides the width its column actually gets by --name-ratio — the
+       spare half is the margin that keeps the line off the edge. --name-max is
+       where it stops growing, once the shell has hit its own max width. */
+    --name-ratio: 9.6;
+    --name-max:   4.8rem;
+
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -314,12 +322,9 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* The name is held to one line, so its size is a width budget rather than a
-       taste call: the two names set about 9.1x the font size, and each band
-       below divides the width its column actually gets by ~9.6 for margin.
-       Here that column is the hero's 7 of 12; the cap is where it stops
-       growing because the shell has hit its max width. */
-    --name-size: min(4.8rem, calc(5.3vw - 3px));
+    /* Here the column the name gets is the hero's 7 of 12, which tracks the
+       viewport closely enough to read straight off it. */
+    --name-size: min(var(--name-max), calc(5.3vw - 3px));
 }
 .hero .grid12 { align-items: center; gap: 4rem 5rem; }
 
@@ -937,15 +942,18 @@ nav {
     .hero {
         padding: calc(var(--nav-h) + 3rem) 0 3.5rem;
         /* Gutters off, divided by the ratio: the name fills the line at any
-           phone width without ever running past it. */
-        --name-size: min(3rem, calc((100vw - 4rem) / 9.6));
+           phone width without ever running past it. The extra 1rem is a
+           scrollbar allowance — 100vw counts a classic desktop scrollbar that
+           the layout box never gets, so without it a narrow desktop window
+           sizes the name off ~15px it can't actually use. Phones overlay their
+           scrollbars and just take the margin. */
+        --name-size: min(3rem, calc((100vw - 2 * var(--gutter) - 1rem) / var(--name-ratio)));
     }
     .section { padding: 4.5rem 0; }
 
     /* The 4:5 portrait stands taller than the phone and eats the whole first
        screen, so it sits out below this width and the copy takes the row. */
     .hero-figure { display: none; }
-    .hero-copy { grid-column: 1 / -1; }
 
     .hero h1 { line-height: 1.05; }
 
